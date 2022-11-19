@@ -21,7 +21,7 @@ class CustomUserAdmin(UserAdmin):
             "fields" : ("last_login", "date_joined")
         }),
         ("Additional info", {
-            "fields" : ( "last_uploaded",)
+            "fields" : ( "last_uploaded", "following")
         })
     )
 

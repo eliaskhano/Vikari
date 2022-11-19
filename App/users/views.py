@@ -13,7 +13,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # local imports 
 from .models import CustomUser 
-from .serializers import CreateUserProfileSerializer
+from .serializers import CreateUserProfileSerializer, UserDataSerializer
 from main.views import format_error, responsedata
 
 
@@ -38,16 +38,14 @@ class LoginAPI(APIView):
                             username = username, 
                             password = password)
 
-        print(username)
-        print(password)
         
         if not user:
             return Response(responsedata(False, ["Credentials are wrong!"]),
                                 status=status.HTTP_400_BAD_REQUEST)
 
         login(request, user)
-        
-        return Response(responsedata(True, ["Authentication successful!"], {'key' : user.id, "message" : "Authentication successful!"}),
+       
+        return Response(responsedata(True, ["Authentication successful!"], {'key' : user.id, "userData" : UserDataSerializer(user).data,"message" : "Authentication successful!"}),
                         status=status.HTTP_200_OK)
 
      

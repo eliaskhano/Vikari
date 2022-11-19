@@ -4,11 +4,10 @@ from django.urls import path
 from . import views 
 
 urlpatterns = [
-   path("moview/", views.Index),
    path("movies/options/", views.Options),
+   path("movies/private/<int:user_id>/", views.MovieAPI.as_view({"get" : "PrivateList"}), {"public" : False}),
    path("movies/public/", views.MovieAPI.as_view({"get": "PublicList"}), {"public" : True}),
-   path("movies/private/", views.MovieAPI.as_view({"get" : "PrivateList"}), {"public" : False}),
+   path("movies/watching/", views.WatchingRecordAPI.as_view())
 
-   path("movies/watching/<int:user_id>/", views.WatchingRecordAPI.as_view())
-
-]
+]       
+        

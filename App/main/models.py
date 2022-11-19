@@ -37,8 +37,9 @@ class Movie(models.Model):
 
 
 class WatchingRecord(models.Model):
-    user   = models.ForeignKey("users.CustomUser", on_delete = models.CASCADE)
-    movie  = models.ForeignKey(Movie, on_delete = models.CASCADE)
+    user   = models.ForeignKey("users.CustomUser", on_delete = models.CASCADE, related_name = "reviewer")
+    # needed to access it from movie
+    movie  = models.ForeignKey(Movie, on_delete = models.CASCADE, related_name = "reviews")
 
     # from 0 to 100
     rating = models.IntegerField(default = 0)

@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 
 
 from rest_framework.response import Response
@@ -7,9 +7,9 @@ from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from .serializers import MoviesOptionsSerializer, WatchingRecordSerializerCreate, MoviePublicSerializer, WatchingRecordTarget
+from .serializers import MoviesOptionsSerializer, WatchingRecordSerializerCreate, MoviePublicSerializer, WatchingRecordTarget, MoviePrivateSerializer
 from .models import Movie
-
+from users.models import CustomUser
 
 # return list of errors 
 def format_error(error):
@@ -43,25 +43,27 @@ def Options(request):
     Movie options list 
     
     """
-    serializer = MoviesOptionsSerializer(Movie.objects.order_by("-rating_avg").all(), many = True)
+    serializer = MoviesOptionsSerializer(Movie.objects.order_by("-rating_avg")[:200], many = True)
     return Response(serializer.data)
 
 
 class MovieAPI(viewsets.ViewSet):
+    
 
-
-    # TODO  
+    # TODO, test this 
     def PrivateList(self, request, public, user_id):
         profile = get_object_or_404(CustomUser, id = user_id)
-
         
-        return Response(serializer.data if queryset else []) 
+        # 
+        queryset   = Movie.objects.order_by("-rating_avg").filter(reviews__user__in = profile.following.all())
+        serializer = MoviePrivateSerializer(queryset, many = True, context = {"profile": profile})
+
+        return Response(serializer.data) 
 
 
-    def PublicList(self, request, public):
+    def PublicList(self, request, public,):
 
-        queryset = Movie.objects.order_by("-rating_avg")[:200]
-
+        queryset = Movie.objects.order_by("-rating_avg")[:50]
         serializer = MoviePublicSerializer(queryset, many = True) 
 
         return Response(serializer.data)
@@ -90,8 +92,7 @@ class WatchingRecordAPI(APIView):
     movie id does not exist 
     """
 
-    def post(self, request, user_id):
-
+    def post(self, request):
         serializer = WatchingRecordSerializerCreate(data = request.data)
         if serializer.is_valid():
             serializer.save()
