@@ -4,6 +4,7 @@ import HomeComponent from "./components/HomeComponent";
 import LoginComponent from "./components/LoginComponent";
 import RegisterComponent from "./components/RegisterComponent";
 import SearchComponent from "./components/SearchComponent";
+import HandleFriend from "./components/HandleFriend ";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -24,6 +25,8 @@ export default function App() {
           <Stack.Screen name="Search" component={SearchComponent} />
 
           <Stack.Screen name="Home" component={HomeComponent} />
+          <Stack.Screen name="AddFriend" component={HandleFriend} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
