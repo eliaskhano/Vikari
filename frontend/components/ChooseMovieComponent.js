@@ -13,7 +13,7 @@ export default function ChooseMovieComponent(props) {
   return (
     <View style={styles.container}>
 
-        <View style={styles.selecotrGroup}>
+        <View style={styles.selectorGroup}>
             <Text style={styles.selector}>Still watching...</Text>
             <Text style={styles.selector} onPress={() => navigation.navigate("Search")}>Search new show</Text>
         </View>
@@ -41,7 +41,7 @@ const styles= StyleSheet.create({
       fontSize: 22,
       borderRadius: 20,
     },
-    selecotrGroup:{
+    selectorGroup:{
       marginTop: "20%",
     },
     
