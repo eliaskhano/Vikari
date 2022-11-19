@@ -17,6 +17,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
+
           <Stack.Screen name="Login" component={LoginComponent} />
           <Stack.Screen name="Register" component={RegisterComponent} />
 

@@ -1,19 +1,36 @@
 import { View, Button } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { useState } from "react"
+import { StyleSheet } from "react-native";
+import NavbarComponent from "./NavbarComponent";
 
 
-function HomeComponent(props) {
+export default function HomeComponent(props) {
   const navigation = useNavigation();   
+  const [userId, setUserId] = useState(null);
+  
 
   return (
-    <View>
-      <Button
-        title="Go to Jane's profile"
-        onPress={() => navigation.navigate('Login')}
-      />
+    <View style={styles.container}>
+
+      <NavbarComponent style={styles.navbar}/>
+
+
     </View>
   );
 }
 
-export default HomeComponent;
+
+const styles= StyleSheet.create({
+  container:{
+    flex: 1,
+    backgroundColor: "#7d27d8",
+    alignItems: "center",
+    flexDirection: ""
+    
+  },
+  navbar:{
+   backgroundColor: "green" 
+  }
+
+})

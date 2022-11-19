@@ -13,7 +13,7 @@ export const mainApi = createApi({
   endpoints: (builder) => ({
     getOptions: builder.query({
       // count is a given parameter when calling the endpoint
-      query: () => createRequest(`/api/movies/public/`),
+      query: () => createRequest(`/api/movies/options/`),
     }),
   }),
 });

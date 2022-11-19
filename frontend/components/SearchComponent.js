@@ -1,10 +1,13 @@
 import React, { useMemo, useState, useEffect } from "react";
+import { SelectList } from 'react-native-dropdown-select-list'
+import { Slider } from '@miblanchard/react-native-slider';
 
 import {
   Animated,
   ScrollView,
   StatusBar,
   StyleSheet,
+  Button,
   TextInput,
   View,
   Text,
@@ -13,89 +16,89 @@ import {
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useGetOptionsQuery } from "../services/mainApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import domain from "../domain";
 
-const dummyData = {
-  fields: [
-    {
-      title: "bla",
-      o_title: "bla",
-      display: "The Office-2015",
-      show_banners: [
-        "https://picsum.photos/200/300",
-        "https://picsum.photos/200/300",
-      ],
-      rating_avg: 12.0,
-      rating_mal: 10,
-      genre: "horror",
-    },
-  ],
-};
+
 
 function SearchComponent(props) {
   const { data: options, isFetching } = useGetOptionsQuery();
-  const [searchResults, setSearch] = useState([]);
+  const [formattedOptions, setFormattedOptions] = useState([]);
+  const [movieId, selectMovie] = useState(null)
+  const [rating, setRating] = useState(50)
 
-  const { clampedScroll } = props;
-
-  const [textInputFocussed, setTextInputFocused] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const updateSearchResults = () => {
+  useEffect(() => {
     if (!isFetching) {
-      const filteredSearch = options?.filter((item) =>
-        item?.title?.toLowerCase()?.includes(searchTerm?.toLowerCase())
-      );
-      console.log(filteredSearch.length);
-      console.log(options.length);
-      setSearch(filteredSearch);
+      setFormattedOptions(options)
     }
-  };
+  }, [isFetching])
+
+
+  const uploadReview = async () => {
+    const token = await AsyncStorage.getItem("token")
+    const context = {
+       user : parseInt(token),
+       movie : movieId, 
+       rating : rating[0] 
+    }
+    console.log(context)
+   
+    await axios.post(`${domain}/api/movies/watching/`, context)
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(e => {
+      console.log(e)
+    })
+    
+  }
 
   return (
-    <View style={{flex:1}}>
-      <TextInput
-        defaultsValue={"top gun maverick"}
-        placeholder={"Search Movie"}
-        style={styles.searchInput}
-        onFocus={() => setTextInputFocused(true)}
-        onBlur={() => setTextInputFocused(false)}
-        onChangeText={(e) => setSearchTerm(e)}
-        returnKeyType="search"
-        onSubmitEditing={() => updateSearchResults()}
-      />
-
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        /* style={{
-          position: "absolute",
-          backgroundColor: "#FFFFFF",
-          top: StatusBar.currentHeight + 50,
-          left: 0,
-          zIndex: 9999,
-          width: "80%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: 0,
-          marginBottom: 0,
-          maxHeight: 600,
-        }}
-        */
-      >
-        {searchResults?.map((item, index) => {
-          return (
-            <View key={index}>
-              <Text> {item.title} </Text>
-            </View>
-          );
-        })}
+    <View >
+    
+        <SelectList 
+          setSelected={e => selectMovie(e)} 
+          fontFamily='Arial'
+          data={formattedOptions}  
+          boxStyles={{borderRadius:0}} //override default styles
+        />
         
-      </ScrollView>
+        <Slider
+            minimumValue={0}
+            maximumValue={100}
+            step={1}
+            value={rating}
+            onValueChange={value => setRating(value)}
+        />
+
+        <Text  onPress={uploadReview}>SUBMIT</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  searchInput: {},
+
+  container: {
+    flex: 1,
+    //backgroundColor: "#7b27d8",
+    alignItems: "center",
+    //justifyContent: "center",
+  },
+
+
+
+  submitButton: {
+    width: "100%",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
+    backgroundColor: "#460b87",
+  },
+
+  
 });
 
 export default SearchComponent;

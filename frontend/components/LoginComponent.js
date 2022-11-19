@@ -35,8 +35,8 @@ function LoginComponent(props) {
 
     await axios.post(LOGIN_URL, context)
     .then(async res => {
-        await AsyncStorage.setItem('@userData', JSON.stringify(res.data.data.userData))
-        await AsyncStorage.setItem("@token", res.data.data.key.toString())
+        await AsyncStorage.setItem('userData', JSON.stringify(res.data.data.userData))
+        await AsyncStorage.setItem("token", res.data.data.key.toString())
 
         navigation.navigate('Home')
 
