@@ -43,7 +43,7 @@ def Options(request):
     Movie options list 
     
     """
-    serializer = MoviesOptionsSerializer(Movies.objects.order_by("rating_avg").all(), many = True)
+    serializer = MoviesOptionsSerializer(Movie.objects.order_by("-rating_avg").all(), many = True)
     return Response(serializer.data)
 
 

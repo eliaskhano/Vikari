@@ -4,10 +4,6 @@ from rest_framework import serializers
 from .models import Movie, WatchingRecord
 
 class MoviesOptionsSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField("get_name")
-
-    def get_name(self, obj):
-        return f"{obj.title} ({obj.year})" 
     
     class Meta:
         model = Movie

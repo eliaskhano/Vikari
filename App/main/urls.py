@@ -4,7 +4,8 @@ from django.urls import path
 from . import views 
 
 urlpatterns = [
-   path("", views.Index),
+   path("moview/", views.Index),
+   path("movies/options/", views.Options),
    path("movies/public/", views.MovieAPI.as_view({"get": "PublicList"}), {"public" : True}),
    path("movies/private/", views.MovieAPI.as_view({"get" : "PrivateList"}), {"public" : False}),
 
