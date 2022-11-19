@@ -20,11 +20,14 @@ export const mainApi = createApi({
     getPublicMovies: builder.query({
       query: () => createRequest(`/api/movies/public/`),
     }),
-    
+
     getPrivateMovies: builder.query({
       query: (user_id) => createRequest(`/api/movies/private/${user_id}/`),
     }),
 
+    getUserList: builder.query({
+      query: (user_id) => createRequest(`/users-api/list/${user_id}/`),
+    })
 
 
   }),
@@ -34,6 +37,6 @@ export const {
     useGetOptionsQuery,
     useGetPublicMoviesQuery,
     useGetPrivateMoviesQuery,
-
+    useGetUserListQuery
 
 } = mainApi

@@ -54,7 +54,6 @@ class MovieAPI(viewsets.ViewSet):
     def PrivateList(self, request, public, user_id):
         profile = get_object_or_404(CustomUser, id = user_id)
         
-        # 
         queryset   = Movie.objects.order_by("-rating_avg").filter(reviews__user__in = profile.following.all())
         serializer = MoviePrivateSerializer(queryset, many = True, context = {"profile": profile})
 
