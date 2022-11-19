@@ -7,7 +7,7 @@ class MoviesOptionsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Movie
-        fields = ('id', 'display')
+        fields = ('id', 'display', "")
 
 
 
@@ -43,3 +43,21 @@ class MoviePublicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie 
         fields = ("id", "title", "o_title", "display", "show_banners", "show_genres","rating_avg", "rating_mal", "genres", "provider_name")
+
+
+
+class WatchingRecordTarget(serializer.ModelSerializer):
+    show_name = serialzier.SerializerMethodField("get_name")
+
+    
+    def get_name(self, obj):
+        return obj.movie.display
+
+    class Meta:
+        model = WatchingRecord
+        fields = ("rating", "date_created", "show_name")
+
+
+
+
+

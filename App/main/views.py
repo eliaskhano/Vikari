@@ -7,7 +7,7 @@ from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from .serializers import MoviesOptionsSerializer, WatchingRecordSerializerCreate, MoviePublicSerializer
+from .serializers import MoviesOptionsSerializer, WatchingRecordSerializerCreate, MoviePublicSerializer, WatchingRecordTarget
 from .models import Movie
 
 
@@ -66,8 +66,7 @@ class MovieAPI(viewsets.ViewSet):
 
         return Response(serializer.data)
 
-    #@action(detail = True, methods=["post"])
-    #def 
+  
 
 
 """
@@ -136,3 +135,15 @@ class FollowUserAPI(APIView):
                             status=status.HTTP_404_NOT_FOUND)
 
     # TODO target detail
+    def get(self, request, user_id):
+        target = get_object_or_404(CustomUser, id = user_id)
+
+        records = WatchingRecord.objects.filter().order_by("-date_created")
+
+        records_serializer = WatchingRecordTarget(records, many = True) 
+
+        context = {
+            "target" : target.username,
+            "records" : records_serializer.data, 
+        }
+        return Response(context)
