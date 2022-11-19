@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -31,7 +32,21 @@ function RegisterComponent(props) {
 
     await axios.post(REGISTER_URL, context)
     .then(res => {
-        console.log(res.data)
+        navigation.navigate('Login')
+    })
+    .catch(e => {
+      Alert.alert(
+        "Error 404",
+        "Wrong credentials :(",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
     })
 
   }

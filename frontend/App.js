@@ -17,9 +17,11 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Search" component={SearchComponent} />
           <Stack.Screen name="Login" component={LoginComponent} />
           <Stack.Screen name="Register" component={RegisterComponent} />
+
+          <Stack.Screen name="Search" component={SearchComponent} />
+
           <Stack.Screen name="Home" component={HomeComponent} />
         </Stack.Navigator>
       </NavigationContainer>

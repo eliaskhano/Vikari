@@ -1,9 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import axios from 'axios';
 
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -11,9 +14,11 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  
 } from "react-native";
 
-const LOGIN_URL = "localhost:8000/users-api/register/";
+
+const LOGIN_URL = "http://localhost:8000/users-api/login/";
 
 
 function LoginComponent(props) {
@@ -29,8 +34,28 @@ function LoginComponent(props) {
     }
 
     await axios.post(LOGIN_URL, context)
-    .then(res => {
-        console.log(res.data)
+    .then(async res => {
+        await AsyncStorage.setItem('@userData', JSON.stringify(res.data.data.userData))
+        await AsyncStorage.setItem("@token", res.data.data.key.toString())
+
+        navigation.navigate('Home')
+
+
+    })
+    .catch(e => {
+      console.log(e)
+      Alert.alert(
+        "Error 404",
+        "Wrong credentials :(",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
     })
 
   }
@@ -64,7 +89,7 @@ function LoginComponent(props) {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginText} >LOGIN</Text>
+        <Text style={styles.loginText} onPress={loginUserHandler}>LOGIN</Text>
       </TouchableOpacity>
     </View>
   );
