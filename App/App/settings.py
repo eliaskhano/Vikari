@@ -146,6 +146,12 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 STATIC_URL = 'static/'
 
+MOVIE_STARTING_INFO_AP = BASE_DIR / 'ap.json' 
+MOVIE_STARTING_INFO_DP = BASE_DIR / 'dp.json' 
+MOVIE_STARTING_INFO_NF = BASE_DIR / 'nf.json' 
+MOVIE_STARTING_INFO_TN = BASE_DIR / 'tn.json' 
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

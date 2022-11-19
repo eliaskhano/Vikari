@@ -30,7 +30,7 @@ class LoginAPI(APIView):
     """
     
     def post(self, request):
-        print("11")
+
         username = request.data.get("username")
         password = request.data.get("password")
 
@@ -75,14 +75,10 @@ class RegisterAPI(APIView):
     """
     # encrypted is the email 
     def post(self, request):
-        print("@@@")
         username = request.data['username']
         email    = request.data['email']
         password = request.data['password']
 
-        print(username)
-        print(email)
-        print(password)
         serializer = CreateUserProfileSerializer(data = request.data)
         
         if serializer.is_valid():
