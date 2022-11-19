@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import store from "./store";
 import { Provider } from "react-redux";
 import AddFriend from "./components/AddFriend";
+import ChooseMovieComponent from "./components/ChooseMovieComponent";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,8 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeComponent} />
           <Stack.Screen name="Login" component={LoginComponent} />
           <Stack.Screen name="Register" component={RegisterComponent} />
+
+          <Stack.Screen name="ChooseMovie" component={ChooseMovieComponent} />
 
           <Stack.Screen name="Search" component={SearchComponent} />
 

@@ -5,7 +5,7 @@ import {useState} from "react"
 import { Button, IconButton} from "@react-native-material/core"
 import { StyleSheet } from 'react-native';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-
+import {ChooseMovieComponent} from "./ChooseMovieComponent"
 
 function NavbarComponent(props) {
   const navigation = useNavigation();   
@@ -16,7 +16,7 @@ function NavbarComponent(props) {
     <View style={styles.navbar}>
         <IconButton
         style={styles.btn}
-        onPress={() => navigation.navigate("Search")}
+        onPress={() => navigation.navigate("ChooseMovie")}
         icon={props => <Icon name="youtube-tv" size={40} color="black"/>}
         />
         <IconButton
