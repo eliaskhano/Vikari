@@ -29,3 +29,10 @@ class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser 
         fields = ("username", "last_uploaded", "show_currently_watching")
+
+
+class UserListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = ("id", "username")

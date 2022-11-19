@@ -13,7 +13,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # local imports 
 from .models import CustomUser 
-from .serializers import CreateUserProfileSerializer, UserDataSerializer
+from .serializers import CreateUserProfileSerializer, UserDataSerializer, UserListSerializer
 from main.views import format_error, responsedata
 
 
@@ -92,7 +92,13 @@ class RegisterAPI(APIView):
 
 
 
-
+@api_view(['get'])
+def UserList(request, user_id):
+    """
+    list of users
+    """
+    res = UserListSerializer(CustomUser.objects.all().exclude(pk = user_id), many = True) 
+    return Response(res.data)
 
 
 
