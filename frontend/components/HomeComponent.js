@@ -6,10 +6,7 @@ import NavbarComponent from "./NavbarComponent";
 
 
 export default function HomeComponent(props) {
-  const navigation = useNavigation();   
-  const [userId, setUserId] = useState(null);
   
-
   return (
     <View style={styles.container}>
 

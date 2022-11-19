@@ -16,7 +16,7 @@ function NavbarComponent(props) {
     <View style={styles.navbar}>
         <IconButton
         style={styles.btn}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => navigation.navigate("Search")}
         icon={props => <Icon name="magnify" size={24} color="black"/>}
         />
         <IconButton
