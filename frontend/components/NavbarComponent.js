@@ -17,17 +17,17 @@ function NavbarComponent(props) {
         <IconButton
         style={styles.btn}
         onPress={() => navigation.navigate("Search")}
-        icon={props => <Icon name="magnify" size={24} color="black"/>}
+        icon={props => <Icon name="youtube-tv" size={40} color="black"/>}
+        />
+        <IconButton
+        style={styles.btn}
+        onPress={() => navigation.navigate("Home")}
+        icon={props => <Icon name="format-list-bulleted" size={40} color="black"/>}
         />
         <IconButton
         style={styles.btn}
         onPress={() => navigation.navigate("Login")}
-        icon={props => <Icon name="format-list-bulleted" size={24} color="black"/>}
-        />
-        <IconButton
-        style={styles.btn}
-        onPress={() => navigation.navigate("Login")}
-        icon={props => <Icon name="account" size={24} color="black"/>}
+        icon={props => <Icon name="account-multiple-plus" size={40} color="black"/>}
         />
         
     </View>
@@ -38,6 +38,7 @@ function NavbarComponent(props) {
 const styles = StyleSheet.create({
     navbar:{
         flexDirection: "row",        
+        padding: 20
     },
     btn:{
         flex: 1,
