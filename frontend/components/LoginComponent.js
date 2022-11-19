@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 import {
   StyleSheet,
@@ -12,12 +13,27 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+const LOGIN_URL = "localhost:8000/users-api/register/";
+
+
 function LoginComponent(props) {
   const navigation = useNavigation();     
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  
-  
+
+  const loginUserHandler = async () => {
+
+    const context = {
+        username: userName,
+        password: password
+    }
+
+    await axios.post(LOGIN_URL, context)
+    .then(res => {
+        console.log(res.data)
+    })
+
+  }
 
   return (
     <View style={styles.container}>
@@ -57,13 +73,14 @@ function LoginComponent(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e7bbfc",
+    backgroundColor: "#7b27d8",
     alignItems: "center",
     justifyContent: "center",
   },
 
   loginText: {
-    fontFamily: "Avenir-Book"
+    fontFamily: "Avenir-Book",
+    color: "#FFFFFF",
   },
 
   image: {
@@ -100,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 40,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#460b87",
   },
 });
 
