@@ -55,7 +55,6 @@ function RegisterComponent(props) {
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#000000"
-          secureTextEntry={true}
           onChangeText={(email) => setEmail(email)}
         />
       </View>
@@ -70,9 +69,10 @@ function RegisterComponent(props) {
         />
       </View>
 
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginText} onPress={registerUserHandler}>REGISTER</Text>
+      <TouchableOpacity style={styles.registerButton}>
+        <Text style={styles.registerText} onPress={registerUserHandler}>REGISTER</Text>
       </TouchableOpacity>
+      
     </View>
   );
 }
@@ -80,13 +80,14 @@ function RegisterComponent(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e7bbfc",
+    backgroundColor: "#7b27d8",
     alignItems: "center",
     justifyContent: "center",
   },
 
-  loginText: {
-    fontFamily: "Avenir-Book"
+  registerText: {
+    fontFamily: "Avenir-Book",
+    color: "#FFFFFF",
   },
 
   image: {
@@ -116,14 +117,14 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Book"
   },
 
-  loginButton: {
+  registerButton: {
     width: "80%",
     borderRadius: 25,
     height: 50,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 40,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#460b87",
   },
 });
 
