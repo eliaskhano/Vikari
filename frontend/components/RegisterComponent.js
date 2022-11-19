@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 import {
   StyleSheet,
@@ -12,11 +13,28 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+const REGISTER_URL = "http://127.0.0.1:8000/users-api/register/";
+
 function RegisterComponent(props) {
   const navigation = useNavigation();     
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const registerUserHandler = async () => {
+
+    const context = {
+        username: userName,
+        email: email,
+        password: password
+    }
+
+    await axios.post(REGISTER_URL, context)
+    .then(res => {
+        console.log(res.data)
+    })
+
+  }
 
   return (
     <View style={styles.container}>
@@ -38,10 +56,10 @@ function RegisterComponent(props) {
           placeholder="Email"
           placeholderTextColor="#000000"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(email) => setEmail(email)}
         />
       </View>
-      
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -52,12 +70,8 @@ function RegisterComponent(props) {
         />
       </View>
 
-      <TouchableOpacity>
-        <Text style={styles.registerButton} onPress={() => navigation.navigate('Register')}>Not registered yet?</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginText} >LOGIN</Text>
+        <Text style={styles.loginText} onPress={registerUserHandler}>REGISTER</Text>
       </TouchableOpacity>
     </View>
   );
