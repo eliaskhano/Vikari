@@ -45,23 +45,42 @@ function AddFriend(props) {
   }, [])
 
 
-  const uploadReview = async () => {
+  const uploadFriend = async () => {
     const token = await AsyncStorage.getItem("token")
-    console.log(token)
+  
 
     const context = {
-       user : parseInt(token),
-       movie : movieId, 
-       rating : rating[0] 
+       target_id : targetId,
     }
-    console.log(context)
    
-    await axios.post(`${domain}/api/movies/watching/`, context)
+    await axios.post(`${domain}/api/friend/add/${token}/`, context)
     .then(res => {
-      console.log(res.data)
+      Alert.alert(
+        "Successful :)",
+        "Friend added!",
+        [
+          {
+            text: "Cancel",
+            onPress: () => navigation.navigate('Home'),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => navigation.navigate('Home') }
+        ]
+      );
     })
     .catch(e => {
-      console.log(e)
+      Alert.alert(
+        "Error 404",
+        "Something went wrong :(",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => navigation.navigate('Home') }
+        ]
+      );
     })
     
   }

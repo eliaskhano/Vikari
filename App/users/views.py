@@ -97,7 +97,7 @@ def UserList(request, user_id):
     """
     list of users
     """
-    res = UserListSerializer(CustomUser.objects.all().exclude(pk = user_id), many = True, context={"profile" : get_object_or_404(CustomUser, id = user_id)}) 
+    res = UserListSerializer(CustomUser.objects.all().exclude(pk__in = get_object_or_404(CustomUser, id = user_id).following.all()).exclude(pk = user_id), many = True) 
     return Response(res.data)
 
 

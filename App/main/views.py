@@ -110,24 +110,16 @@ class FollowUserAPI(APIView):
     """
     Accepts:
     target_id  -> id 
-    following  -> boolean
 
     Possible errors
     user id or target id do not exist 
     """
     def post(self, request, user_id):
         try:
-            following = bool(request.data.get('following'))
-
             user   = get_object_or_404(CustomUser, id = user_id)
-            target = get_object_or_404(CustomUser, id = target_id)
-
-            if following:
-                user.following.add(target) 
-            else:
-                user.following.remove(target)
-
-            return Response(responsedata(True, ["Follow added!" if following else "Follow removed!"]),
+            target = get_object_or_404(CustomUser, id = request.data['target_id'])
+            user.following.add(target) 
+            return Response(responsedata(True, ["Follow added!"]),
                                     status=status.HTTP_200_OK)
 
         except Exception as e:

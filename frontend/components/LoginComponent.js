@@ -37,6 +37,8 @@ function LoginComponent(props) {
     .then(async res => {
         await AsyncStorage.setItem('userData', JSON.stringify(res.data.data.userData))
         await AsyncStorage.setItem("token", res.data.data.key.toString())
+        
+        console.log(res.data.data.userData)
 
         navigation.navigate('Home')
 

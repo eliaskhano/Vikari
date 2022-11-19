@@ -20,7 +20,9 @@ def update_movie_statistic(sender, instance, created, **kwargs):
         instance.movie.save()
 
         # updating the users last uploaded instance
-        instance.user.last_uploaded = timezone.now() 
+        instance.user.last_uploaded = timezone.now()
+        instance.user.currently_watching = instance.movie 
+         
         instance.user.save()
 
 
