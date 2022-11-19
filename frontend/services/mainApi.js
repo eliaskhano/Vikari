@@ -21,10 +21,12 @@ export const mainApi = createApi({
       query: () => createRequest(`/api/movies/public/`),
     }),
 
+    // todo remove 
     getPrivateMovies: builder.query({
       query: (user_id) => createRequest(`/api/movies/private/${user_id}/`),
     }),
 
+    // todo remove 
     getUserList: builder.query({
       query: (user_id) => createRequest(`/users-api/list/${user_id}/`),
     })

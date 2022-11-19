@@ -26,7 +26,7 @@ function NavbarComponent(props) {
         />
         <IconButton
         style={styles.btn}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => navigation.navigate("AddFriend")}
         icon={props => <Icon name="account-multiple-plus" size={40} color="black"/>}
         />
         

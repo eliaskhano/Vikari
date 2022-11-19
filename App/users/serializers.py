@@ -32,12 +32,20 @@ class UserDataSerializer(serializers.ModelSerializer):
 
 
 class UserListSerializer(serializers.ModelSerializer):
-    is_friend = serializers.SerializerMethodField("get_is_friend")
-
+    is_friend   = serializers.SerializerMethodField("get_is_friend")
+    key         = serializers.SerializerMethodField("get_key")
+    value       = serializers.SerializerMethodField("get_value")
+    
+    
     def get_is_friend(self, obj):
         return obj in self.context.get("profile").following.all() 
 
+    def get_key(self, obj):
+        return obj.id 
+
+    def get_value(self, obj):
+        return obj.username 
 
     class Meta:
         model = CustomUser
-        fields = ("id", "username", "is_friend")
+        fields = ("key", "value", "is_friend")

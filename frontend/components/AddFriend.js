@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { SelectList } from 'react-native-dropdown-select-list'
-import { Slider } from '@miblanchard/react-native-slider';
 
 import {
   Animated,
@@ -15,28 +14,41 @@ import {
 } from "react-native";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useGetOptionsQuery } from "../services/mainApi";
+import { useGetUserListQuery } from "../services/mainApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import domain from "../domain";
 
 
 
-function HandleFriend(props) {
-  const { data: options, isFetching } = useGetOptionsQuery();
+function AddFriend(props) {
+  const getId = async () => {
+    return await AsyncStorage.getItem("token")
+  }
+
   const [formattedOptions, setFormattedOptions] = useState([]);
-  const [movieId, selectMovie] = useState(null)
-  const [rating, setRating] = useState(50)
+  const [targetId, selectTarget] = useState(null)
+  const [following, setFollowing] = useState(Boolean)
+
 
   useEffect(() => {
-    if (!isFetching) {
-      setFormattedOptions(options)
+    const call = async () => {
+        const user_id = await getId();
+        console.log(user_id)
+    
+        await axios.get(`${domain}/users-api/list/${user_id}/`)
+        .then(res => {
+            setFormattedOptions(res.data)
+        })
     }
-  }, [isFetching])
+    call()
+  }, [])
 
 
   const uploadReview = async () => {
     const token = await AsyncStorage.getItem("token")
+    console.log(token)
+
     const context = {
        user : parseInt(token),
        movie : movieId, 
@@ -58,21 +70,14 @@ function HandleFriend(props) {
     <View >
     
         <SelectList 
-          setSelected={e => selectMovie(e)} 
+          setSelected={e => selectTarget(e)} 
           fontFamily='Arial'
           data={formattedOptions}  
           boxStyles={{borderRadius:0}} //override default styles
         />
         
-        <Slider
-            minimumValue={0}
-            maximumValue={100}
-            step={1}
-            value={rating}
-            onValueChange={value => setRating(value)}
-        />
 
-        <Text  onPress={uploadReview}>SUBMIT</Text>
+        <Text  onPress={uploadFriend}>SUBMIT</Text>
     </View>
   );
 }
@@ -101,4 +106,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default HandleFriend;
+export default AddFriend;
