@@ -7,9 +7,14 @@ import NavbarComponent from "./NavbarComponent";
 import domain from '../domain'
 import { useGetPublicMoviesQuery } from "../services/mainApi";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
 export default function ChooseMovieComponent(props) {
     const navigation = useNavigation();   
     const { data, isFetching } = useGetPublicMoviesQuery();
+    const [item, setItem] = useState({})
+    const [userData, setUserData] = useState({})
 
     const [lastWatchedMovie, setLastWatchedMovie] = useState([])
 
@@ -23,43 +28,35 @@ export default function ChooseMovieComponent(props) {
 
     useEffect(() => {
         const func = async() => {
-            const user_id = await getId()
-            const userData = await getUserData()
-            console.log(JSON.parse(userData))
-            await axios.get(`${domain}/api/movies/private/${user_id}/`)
-            .then(res => {
-                setPrivate(res.data)
-            })
+            const tempData = await getUserData()
+            setUserData(JSON.parse(tempData))
+            setItem(JSON.parse(tempData)?.show_currently_watching)
         }
         func() 
 
     }, [])
 
-
+    console.log(userData?.show_currently_watching)
     return (
         <View style={styles.container}>
             <View style={styles.selectorGroup}>
-                
-                {/* <Card style={{marginTop: 0, margin: 20}}>
-                
+             
+                {userData?.show_currently_watching && (
+                  <Card style={{ marginTop: 0, margin: 20 }} key={item?.id}>
                     {item?.show_banners[0] !== undefined && (
-                        <Card.Cover source={{ uri: item?.show_banners[0] }} />
+                      <Card.Cover source={{ uri: item?.show_banners[0] }} />
                     )}
-
+    
                     <Card.Content>
-                        <Title style={{marginTop: 20}}>
-                            <Text style={{color: "red"}}>{item.rating_avg}/100</Text> 
-                        </Title>
-                        <Title>
-                            {item.display}
-                        </Title>
-                        <Paragraph>Card content</Paragraph>
+                      <Title style={{ marginTop: 20 }}>
+                        <Text style={{ color: "red" }}>{item.rating_avg}/100</Text>
+                      </Title>
+                      <Title>{item.display}</Title>
+                      <Paragraph>Card content</Paragraph>
                     </Card.Content>
-                
-                </Card> */}
-
-                {/* <Text style={styles.selector}>Still watching...</Text>
-                <Text style={styles.selector} onPress={() => navigation.navigate("Search")}>Search new show</Text> */}
+                  </Card>
+                )}
+                <Text style={styles.selector} onPress={() => navigation.navigate("Search")}>Search new show</Text>
             </View>
             <NavbarComponent style={styles.navbar}/>
         </View>
