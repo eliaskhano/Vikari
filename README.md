@@ -13,5 +13,5 @@
 
 ### Inside App folder: 
 1. create a virtual enviroment
-1. install requirements.txt in the venv using: `pip install -r requirements.txt`
-2. run django server via `python manage.py runserver`
+2. install requirements.txt in the venv using: `pip install -r requirements.txt`
+3. run django server via `python manage.py runserver`
