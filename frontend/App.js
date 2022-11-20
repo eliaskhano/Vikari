@@ -1,16 +1,17 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import HomeComponent from "./components/HomeComponent";
-import LoginComponent from "./components/LoginComponent";
-import RegisterComponent from "./components/RegisterComponent";
-import SearchComponent from "./components/SearchComponent";
+import { MovieSuggestions, 
+    SearchComponent, 
+    HomeComponent, 
+    LoginComponent, 
+    ChooseMovieComponent,
+    RegisterComponent, } from "./components";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import store from "./store";
 import { Provider } from "react-redux";
 import AddFriend from "./components/AddFriend";
-import ChooseMovieComponent from "./components/ChooseMovieComponent";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +30,8 @@ export default function App() {
           <Stack.Screen name="Search" component={SearchComponent} />
 
           <Stack.Screen name="AddFriend" component={AddFriend} />
-
+          <Stack.Screen name="MovieSuggestions" component={MovieSuggestions} />
+        
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

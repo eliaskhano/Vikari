@@ -2,19 +2,11 @@ import React, { useMemo, useState, useEffect } from "react";
 import { SelectList } from 'react-native-dropdown-select-list'
 
 import {
-  Animated,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Button,
-  TextInput,
   View,
   Text,
-  TouchableHighlight,
 } from "react-native";
 
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useGetUserListQuery } from "../services/mainApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import domain from "../domain";
@@ -28,7 +20,6 @@ function AddFriend(props) {
 
   const [formattedOptions, setFormattedOptions] = useState([]);
   const [targetId, selectTarget] = useState(null)
-  const [following, setFollowing] = useState(Boolean)
 
 
   useEffect(() => {

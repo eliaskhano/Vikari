@@ -97,13 +97,13 @@ class MoviePrivateSerializer(serializers.ModelSerializer):
         ratings = WatchingRecord.objects.filter(movie = obj, user__in = self.context.get("profile").following.all())
         amount = sum(list(map(lambda k: k.rating, ratings)))
         if (ratings.count() > 0):
-            return float(amount) / float(len(ratings))
+            return round(float(amount) / float(len(ratings)), 2)
         else:
             return 0
         
 
     def get_show_friends(self, obj):
-        res = list(map(lambda k: k.username, self.context.get("profile").following.filter(reviewer__in = obj.reviews.all())))
+        res = list(set(map(lambda k: k.username, self.context.get("profile").following.filter(reviewer__in = obj.reviews.all()))))
         return res 
 
 

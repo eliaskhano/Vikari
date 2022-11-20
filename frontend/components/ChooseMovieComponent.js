@@ -6,9 +6,9 @@ import NavbarComponent from "./NavbarComponent";
 
 
 export default function ChooseMovieComponent(props) {
-  const navigation = useNavigation();   
-  const [userId, setUserId] = useState(null);
   
+  const navigation = useNavigation();   
+
 
   return (
     <View style={styles.container}>

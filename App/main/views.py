@@ -53,16 +53,17 @@ class MovieAPI(viewsets.ViewSet):
     # TODO, test this 
     def PrivateList(self, request, public, user_id):
         profile = get_object_or_404(CustomUser, id = user_id)
-        
+ 
         queryset   = Movie.objects.order_by("-rating_avg").filter(reviews__user__in = profile.following.all())
-        serializer = MoviePrivateSerializer(queryset, many = True, context = {"profile": profile})
-
+    
+        serializer = MoviePrivateSerializer(list(set(queryset)), many = True, context = {"profile": profile})
+    
         return Response(serializer.data) 
 
 
-    def PublicList(self, request, public,):
+    def PublicList(self, request, public):
 
-        queryset = Movie.objects.order_by("-rating_avg")[:50]
+        queryset = Movie.objects.order_by("-rating_avg")[:25]
         serializer = MoviePublicSerializer(queryset, many = True) 
 
         return Response(serializer.data)
