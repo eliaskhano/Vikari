@@ -3,8 +3,8 @@
  - React Native application optimized for mobile devices
 
 ##  Login SQ Lite Database
-Email: admin
-Password: testing321
+- Email: admin
+- Password: testing321
 
 ### Getting Started
 ##### Inside frontend folder: 
