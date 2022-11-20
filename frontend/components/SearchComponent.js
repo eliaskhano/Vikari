@@ -3,6 +3,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { Slider } from "@miblanchard/react-native-slider";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { IconButton } from "@react-native-material/core";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Animated,
@@ -14,6 +15,7 @@ import {
   View,
   Text,
   TouchableHighlight,
+  Alert
 } from "react-native";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -23,6 +25,7 @@ import axios from "axios";
 import domain from "../domain";
 
 function SearchComponent(props) {
+  const navigation = useNavigation();     
   const { data: options, isFetching } = useGetOptionsQuery();
   const [formattedOptions, setFormattedOptions] = useState([]);
   const [movieId, selectMovie] = useState(null);
@@ -47,9 +50,25 @@ function SearchComponent(props) {
       .post(`${domain}/api/movies/watching/`, context)
       .then((res) => {
         console.log(res.data);
+        Alert.alert("Successful", "Record added :)", [
+          {
+            text: "Cancel",
+            onPress: () => navigation.navigate("Home"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => navigation.navigate("Home") },
+        ]);
       })
       .catch((e) => {
         console.log(e);
+        Alert.alert("Error 404", "Wrong credentials :(", [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
       });
   };
 
@@ -60,7 +79,7 @@ function SearchComponent(props) {
         fontFamily="Avenir-Book"
         data={formattedOptions}
         boxStyles={{ borderRadius: 0, backgroundColor: "white" }} //override default styles
-        dropdownStyles= {{ backgroundColor: "white"}}
+        dropdownStyles={{ backgroundColor: "white" }}
       />
 
       <View style={styles.slider}>
@@ -97,7 +116,7 @@ function SearchComponent(props) {
       </View>
 
       <View style={styles.button}>
-        <Button color="#FFFFFF" onPress={uploadReview} title="SUBMIT"></Button>
+        <Button color="#FFFFFF" onPress={uploadReview} title="SUBMIT"/>
       </View>
     </View>
   );
@@ -109,7 +128,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5ccff",
     padding: 20,
     paddingTop: 40,
- 
   },
 
   submitButton: {
