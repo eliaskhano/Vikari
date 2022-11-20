@@ -71,7 +71,7 @@ function MovieSuggestions() {
                     <Text style={{ color: "red" }}>{item.rating_avg}/100</Text>
                   </Title>
                   <Title>{item.display}</Title>
-                  <Paragraph>Card content</Paragraph>
+                 
                 </Card.Content>
               </Card>
             ))

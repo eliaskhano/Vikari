@@ -13,7 +13,7 @@ function NavbarComponent(props) {
     <View style={styles.navbar}>
         <IconButton
         style={styles.btn}
-        onPress={() => navigation.navigate("ChooseMovie")}
+        onPress={() => navigation.navigate("Search")}
         icon={props => <Icon name="youtube-tv" size={40} color="black"/>}
         />
         <IconButton

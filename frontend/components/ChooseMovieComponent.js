@@ -41,21 +41,6 @@ export default function ChooseMovieComponent(props) {
         <View style={styles.container}>
             <View style={styles.selectorGroup}>
              
-                {userData?.show_currently_watching && (
-                  <Card style={{ marginTop: 0, margin: 20 }} key={item?.id}>
-                    {item?.show_banners[0] !== undefined && (
-                      <Card.Cover source={{ uri: item?.show_banners[0] }} />
-                    )}
-    
-                    <Card.Content>
-                      <Title style={{ marginTop: 20 }}>
-                        <Text style={{ color: "red" }}>{item.rating_avg}/100</Text>
-                      </Title>
-                      <Title>{item.display}</Title>
-                      <Paragraph>Card content</Paragraph>
-                    </Card.Content>
-                  </Card>
-                )}
                 <Text style={styles.selector} onPress={() => navigation.navigate("Search")}>Search new show</Text>
             </View>
             <NavbarComponent style={styles.navbar}/>
